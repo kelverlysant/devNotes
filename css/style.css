@@ -180,6 +180,15 @@ textarea::-webkit-scrollbar{
     }
 }
 @media (max-width: 700px) {
+
+    #search-container{
+       margin-left: 40px;
+    }
+    #search-container i{
+       position: relative;
+       right: 50px;
+       
+    }
     #notes-container{
         grid-template-columns: repeat(auto-fill,100%);
         gap: 1rem;
