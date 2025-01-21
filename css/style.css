@@ -178,6 +178,11 @@ textarea::-webkit-scrollbar{
         grid-template-columns: repeat(auto-fill, 50% 50% );
         gap: 1rem;
     }
+    .note .bi-x-lg,
+.note .bi-file-earmark-plus,
+.note .bi-pin{
+    opacity: 1;
+}
 }
 @media (max-width: 700px) {
 
