@@ -11,114 +11,136 @@ const searchInput = document.querySelector("#search-input");
 
 const exportBtn = document.querySelector("#export-notes")
 
+const colorCard = document.querySelector("#color-card")
+const colorTitle = document.querySelector("#color-title")
+const colorContent = document.querySelector("#color-content")
+
 // funções
-function showNotes(){
+function showNotes() {
     cleanNotes();
 
-    getNotes().forEach((note)=>{
-        const noteElement = createNote(note.id, note.title, note.content, note.fixed);
+    getNotes().forEach((note) => {
+        const noteElement = createNote(
+            note.id,
+            note.title,
+            note.content,
+            note.fixed,
+            note.colorCard,
+            note.colorTitle,
+            note.colorContent
+        );
 
         notesContainer.appendChild(noteElement);
     });
-};
+}
 
 function cleanNotes(){
     notesContainer.replaceChildren([]);
 }
 
 function addNote(){
-    
-    const notes = getNotes()
+    const notes = getNotes();
 
     const noteObject = {
         id: generateId(),
         title: noteTitle.value,
         content: noteInput.value,
         fixed: false,
+        colorCard: colorCard.value, 
+        colorTitle: colorTitle.value, 
+        colorContent: colorContent.value,
     };
 
-    const noteElement = createNote(noteObject.id ,noteObject.title, noteObject.content);
-     
+    // Criar e exibir a nova nota com as cores definidas
+    const noteElement = createNote(
+        noteObject.id,
+        noteObject.title,
+        noteObject.content,
+        noteObject.fixed,
+        noteObject.colorCard,
+        noteObject.colorTitle,
+        noteObject.colorContent
+    );
+
     notesContainer.appendChild(noteElement);
 
+    // Salvar a nova nota
     notes.push(noteObject);
-    saveNotes(notes)
+    saveNotes(notes);
 
+    // Limpar os campos de entrada
     noteTitle.value = "";
     noteInput.value = "";
+    colorCard.value = "";
+    colorTitle.value = "";
+    colorContent.value = "";
 };
 
 function generateId(){
     return Math.floor(Math.random() * 5000)
 };
 
-function createNote(id, title ,content, fixed){
-
+function createNote(id, title, content, fixed, colorCard, colorTitle, colorContent) {
     const element = document.createElement("div");
     element.classList.add("note");
 
     const titleElement = document.createElement("h4");
     titleElement.textContent = title;
-    titleElement.classList.add("title")
+    titleElement.classList.add("title");
 
     const textarea = document.createElement("textarea");
     textarea.value = content;
     textarea.placeholder = "Adicione algum texto...";
 
-    
+   
+    element.style.backgroundColor = colorCard;
+    titleElement.style.color = colorTitle;
+    textarea.style.color = colorContent;
+
     element.appendChild(titleElement);
     element.appendChild(textarea);
 
-    const pinIcon = document.createElement("i")
+    const pinIcon = document.createElement("i");
+    pinIcon.classList.add(...["bi", "bi-pin"]);
+    element.appendChild(pinIcon);
 
-    pinIcon.classList.add(...["bi", "bi-pin"])
-    
-    element.appendChild(pinIcon)
+    const deletIcon = document.createElement("i");
+    deletIcon.classList.add(...["bi", "bi-x-lg"]);
+    element.appendChild(deletIcon);
 
-    
-    const deletIcon = document.createElement("i")
+    const duplicateIcon = document.createElement("i");
+    duplicateIcon.classList.add(...["bi", "bi-file-earmark-plus"]);
+    element.appendChild(duplicateIcon);
 
-    deletIcon.classList.add(...["bi", "bi-x-lg"])
-    
-    element.appendChild(deletIcon)
+    deletIcon.style.color = colorTitle
+    pinIcon.style.color = colorTitle
+    duplicateIcon.style.color = colorTitle
 
-
-    
-    const duplicateIcon = document.createElement("i")
-
-    duplicateIcon.classList.add(...["bi", "bi-file-earmark-plus"])
-    
-    element.appendChild(duplicateIcon)
-
-
-
-    if(fixed){
+    if (fixed) {
         element.classList.add("fixed");
-    };
+    }
 
-// eventos do elemento
-    element.querySelector(".bi-pin").addEventListener("click", ()=>{
-        ToggleFixNote(id)
+    // Eventos do elemento
+    element.querySelector(".bi-pin").addEventListener("click", () => {
+        ToggleFixNote(id);
     });
 
-
-    element.querySelector(".bi-x-lg").addEventListener("click", ()=>{
-        deletNote(id, element )
-       
+    element.querySelector(".bi-x-lg").addEventListener("click", () => {
+        deletNote(id, element);
     });
 
-    element.querySelector(".bi-file-earmark-plus").addEventListener("click", ()=>{
-        copyNote(id)
-        console.log("testando")
+    element.querySelector(".bi-file-earmark-plus").addEventListener("click", () => {
+        copyNote(id);
     });
 
-    element.querySelector("textarea").addEventListener("keyup", (e)=>{
+    element.querySelector("textarea").addEventListener("keyup", (e) => {
         const noteContent = e.target.value;
-        updateNote(id, noteContent);
+        updateNoteContent(id, noteContent);
     });
-    return element;
 
+    return element;
 };
+
 
 function ToggleFixNote(id){
     const notes = getNotes();
@@ -139,17 +161,30 @@ function deletNote(id, element){
 
 function copyNote(id){
     const notes = getNotes();
+    const targetNote = notes.filter((note) => note.id === id)[0];
 
-    const targetNotes = notes.filter((note) => note.id === id)[0];
-
-    const noteObject ={
+    const noteObject = {
         id: generateId(),
-        title: targetNotes.title,
-        content: targetNotes.content,
-        fixed: false,
+        title: targetNote.title,
+        content: targetNote.content,
+        fixed: false, 
+        colorCard: targetNote.colorCard, 
+        colorTitle: targetNote.colorTitle, 
+        colorContent: targetNote.colorContent,
     };
 
-    const noteElement = createNote(noteObject.id, noteObject.title, noteObject.content, noteObject.fixed);
+    
+    const noteElement = createNote(
+        noteObject.id,
+        noteObject.title,
+        noteObject.content,
+        noteObject.fixed,
+        noteObject.colorCard,
+        noteObject.colorTitle,
+        noteObject.colorContent
+    );
+
+   
     notesContainer.appendChild(noteElement);
     notes.push(noteObject);
     saveNotes(notes);
@@ -166,26 +201,31 @@ function updateNote(id, newcontent){
 
 };
 
-function searchNotes(search){
-    const searchResults = getNotes().filter((note)=>{
-       return note.title.includes(search);
+function searchNotes(search) {
+    const searchResults = getNotes().filter((note) => {
+        return note.title.includes(search);
     });
 
+    if (search !== "") {
+        cleanNotes();
 
-
-    if(search !== ""){
-        cleanNotes()
-
-        searchResults.forEach((note) =>{
-            const noteElement = createNote(note.id, note.title, note.content);
+        searchResults.forEach((note) => {
+            const noteElement = createNote(
+                note.id,
+                note.title,
+                note.content,
+                note.fixed,
+                note.colorCard,
+                note.colorTitle,
+                note.colorContent
+            );
             notesContainer.appendChild(noteElement);
         });
 
         return;
-    };
+    }
 
     cleanNotes();
-
     showNotes();
 };
 

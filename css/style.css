@@ -159,7 +159,33 @@ textarea::-webkit-scrollbar{
 .note.fixed{
     background-color: #004cff;
 }
-
+#color-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    color: var(--cor3);
+    font-weight: bold;
+}
+.color-notes{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    width: 25px;
+    height: 25px;
+    border: none;
+    cursor: pointer;
+  }
+  .color-notes::-webkit-color-swatch {
+    border-radius: 50%;
+    border: 2px solid #ccc;
+  }
+  .color-notes::-moz-color-swatch {
+    border-radius: 50%;
+    border: 2px solid #ccc;
+  }
+  
 /* responsividade */
 
 @media (max-width: 600px) {
