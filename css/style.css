@@ -119,6 +119,7 @@ textarea::-webkit-scrollbar{
 .note .bi-pin{
     position: absolute;
     right: 10px;
+    bottom: 10px;
     color: var(--cor2);
     cursor: pointer;
     font-size: 1.2rem;
