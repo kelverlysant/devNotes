@@ -155,9 +155,7 @@ textarea::-webkit-scrollbar{
     word-break: break-all;
     color: #cacaca;
 }
-.note.fixed{
-    background-color: #004cff;
-}
+
 #color-container{
     display: flex;
     justify-content: center;

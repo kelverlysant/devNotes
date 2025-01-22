@@ -135,21 +135,30 @@ function createNote(id, title, content, fixed, colorCard, colorTitle, colorConte
 
     element.querySelector("textarea").addEventListener("keyup", (e) => {
         const noteContent = e.target.value;
-        updateNoteContent(id, noteContent);
+        updateNote(id, noteContent);
     });
 
     return element;
 };
+function updateNote(id, newContent) {
+    const notes = getNotes();
+    const targetNote = notes.find(note => note.id === id);
 
+    if (targetNote) {
+        targetNote.content = newContent; 
+        saveNotes(notes); 
+    }
+   
+};
 
 function ToggleFixNote(id){
-    getNotes()
+    const notes = getNotes()
 
     const targetNote = notes.filter((note)=> note.id === id)[0];
     targetNote.fixed = !targetNote.fixed;
+  
     saveNotes(notes);
     showNotes();
-
 };
 
 function deletNote(id, element){
@@ -190,16 +199,6 @@ function copyNote(id){
     saveNotes(notes);
 };
 
-function updateNote(id, newcontent){
-    const notes = getNotes();
-
-    const targetNote = notes.filter((note) => note.id === id)[0];
-
-    targetNote.content = newcontent;
-
-    saveNotes(notes);
-
-};
 
 function searchNotes(search){
     const searchResults = getNotes().filter((note)=>{
@@ -230,7 +229,7 @@ function exportDate(){
 
     const csvString = [
         ["ID", "Title", "Content", "Fixed?"],
-        ...notes.map((note) => [note.id, note.title, note.content, note.fixed])
+        ...notes.map((note) => [note.id, note.title, note.content, note.fixed,])
     ]
     .map((e) => e.join(","))
     .join("\n");
