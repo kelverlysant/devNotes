@@ -143,7 +143,7 @@ function createNote(id, title, content, fixed, colorCard, colorTitle, colorConte
 
 
 function ToggleFixNote(id){
-    const notes = getNotes();
+    getNotes()
 
     const targetNote = notes.filter((note)=> note.id === id)[0];
     targetNote.fixed = !targetNote.fixed;
@@ -201,31 +201,26 @@ function updateNote(id, newcontent){
 
 };
 
-function searchNotes(search) {
-    const searchResults = getNotes().filter((note) => {
-        return note.title.includes(search);
+function searchNotes(search){
+    const searchResults = getNotes().filter((note)=>{
+       return note.title.includes(search);
     });
 
-    if (search !== "") {
-        cleanNotes();
 
-        searchResults.forEach((note) => {
-            const noteElement = createNote(
-                note.id,
-                note.title,
-                note.content,
-                note.fixed,
-                note.colorCard,
-                note.colorTitle,
-                note.colorContent
-            );
+
+    if(search !== ""){
+        cleanNotes()
+
+        searchResults.forEach((note) =>{
+            const noteElement = createNote(note.id, note.title, note.content, note.colorCard, note.colorTitle, note.colorContent);
             notesContainer.appendChild(noteElement);
         });
 
         return;
-    }
+    };
 
     cleanNotes();
+
     showNotes();
 };
 
