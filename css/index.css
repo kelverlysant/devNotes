@@ -92,6 +92,9 @@ footer p{
     }
 }
 @media (max-width: 550px){
+    h2{
+        margin-top: 50px;
+    }
     img{
         width: 250px;
         height: 350px;
