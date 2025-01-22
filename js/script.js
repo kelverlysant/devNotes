@@ -119,6 +119,10 @@ function createNote(id, title, content, fixed, colorCard, colorTitle, colorConte
     if (fixed) {
         element.classList.add("fixed");
     }
+    if(colorCard === colorTitle){
+        alert ("O título e o card estão com a mesma cor. Tente escolher cores diferentes para destacar melhor.")
+        return;
+    }
 
     // Eventos do elemento
     element.querySelector(".bi-pin").addEventListener("click", () => {

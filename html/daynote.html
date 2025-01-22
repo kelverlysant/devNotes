@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DayNotes</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/script.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="../img/favicon-32x32.png" type="img/favicon">
+</head>
+<body>
+    <header>
+        <a href="../index.html">
+            DayNotes
+        </a>
+            <div id="search-container">
+                <input type="text" id="search-input" placeholder="Busque por uma nota">
+                <i class="bi bi-search"></i>
+            </div>
+            <button id="export-notes">
+                Exportar CSV <i class="bi bi-download"></i>
+            </button>
+    </header>
+    <div id="ad-note-container">
+        <input type="text" id="title-input" placeholder="Adicione um título">
+
+        <input type="text" id="note-content" placeholder="O que deseja anotar?">
+        <button class="add-note"><i class="bi bi-plus-lg"></i></button>
+    </div>
+    <div id="color-container">
+        <label for="color-card">Card:</label>
+        <input type="color" name="" id="color-card" class="color-notes">
+        <label for="color-card">Título:</label>
+        <input type="color" name="" id="color-title" class="color-notes">
+        <label for="color-card">Texto:</label>
+        <input type="color" name="" id="color-content"  class="color-notes">
+    </div>
+    <div id="notes-container">
+        
+    </div>
+</body>
+</html>

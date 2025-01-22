@@ -19,11 +19,15 @@ body{
 header{
     border-bottom: 1px solid #ccc;
     padding: 1rem 2rem;
-    color: var(--cor3);
     display: flex;
     align-items: center;
-    font-weight: 900;
     justify-content: space-around;
+}
+a{
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--cor3);
 }
 input:focus{
     outline: none;
@@ -145,11 +149,6 @@ textarea::-webkit-scrollbar{
 }
 .note:hover > i{
     opacity: 1;
-}
-.note .bi-x-lg:hover,
-.note .bi-file-earmark-plus:hover,
-.note .bi-pin:hover{
-    color: var(--cor1);
 }
 .title{
     width: 90%;
